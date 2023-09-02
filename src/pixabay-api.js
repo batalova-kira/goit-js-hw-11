@@ -5,12 +5,12 @@ export default class ImageApiSearch {
     constructor() {
         this.searchQuery = '';
         this.page = 1;
-}
-
-    fetchSearchImages() {
-        
-    const BASE_URL = 'https://pixabay.com/api/';
-    const params = new URLSearchParams ({
+    }
+    
+     async fetchSearchImages() {
+            
+        const BASE_URL = 'https://pixabay.com/api/';
+        const params = new URLSearchParams ({
             key: '39172985-9aae9b27665de10b1c143dbd8',
             q: this.searchQuery,
             image_type: "photo",
@@ -19,12 +19,18 @@ export default class ImageApiSearch {
             per_page: 40,
             page: this.page,
     })
-        return axios.get(`${BASE_URL}?${params}`)
-            .then(data => {
-            this.incrementPage();
-                return data.hits;
-});
-    }
+         return await axios.get(`${BASE_URL}?${params}`).
+             then(resp => {
+                 if (!resp.ok) {
+                     throw new Error(resp.statusText);
+                 }
+                 this.incrementPage();
+    const data = resp.data;
+      return data.hits;
+     })
+    .catch (err => console.log(err)) 
+  }
+
     incrementPage() {
         this.page += 1;
     }
@@ -38,10 +44,3 @@ export default class ImageApiSearch {
         this.searchQuery = newQuery;
     }
 }
-    // if (!resp.ok) {
-    //     throw new Error(resp.statusText);
-    // }
-    // return resp
-// }
-  
-// searchImages(cat);
