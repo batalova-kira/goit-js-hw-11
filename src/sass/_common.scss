@@ -1,1 +1,43 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+
+.gallery {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 0 20px;
+}
+
+img {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+.photo-card {
+        overflow: hidden;
+        border-radius: 7px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+}
+.photo-img {
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+}
+
+.photo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding: 0 15px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
