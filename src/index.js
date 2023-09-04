@@ -52,8 +52,8 @@ function handlerSubmit(e) {
                 });
                 return false;
             }
-            // const totalPhoto = data.totalHits || 0; 
-            // Notify.success(`Hooray! We found ${totalPhoto} images.`);
+            const totalPhoto = data.totalHits || 0; 
+            Notify.success(`Hooray! We found ${totalPhoto} images.`);
            console.log( data)
             refs.gallery = document.querySelector('.gallery');
             refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
