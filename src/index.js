@@ -52,8 +52,9 @@ function handlerSubmit(e) {
                 });
                 return false;
             }
-            const totalHits = data.totalHits || 0; 
-            Notify.success(`Hooray! We found ${totalHits} images.`);
+            // const totalPhoto = data.totalHits || 0; 
+            // Notify.success(`Hooray! We found ${totalPhoto} images.`);
+           console.log( data)
             refs.gallery = document.querySelector('.gallery');
             refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
             lightbox.refresh();
@@ -103,12 +104,3 @@ function createMarkup(arr) {
     </div>
   `).join("");
 }
-
-const { height: cardHeight } = document
-  .querySelector(".gallery")
-  .firstElementChild.getBoundingClientRect();
-
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});
