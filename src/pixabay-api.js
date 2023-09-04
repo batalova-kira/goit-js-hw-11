@@ -1,11 +1,9 @@
 import axios from "axios";
-
 export default class ImageApiSearch {
     constructor() {
         this.searchQuery = '';
         this.page = 1;
     }
-    
      async fetchSearchImages() {
     const BASE_URL = 'https://pixabay.com/api/';
     const params = new URLSearchParams({
@@ -22,8 +20,7 @@ export default class ImageApiSearch {
         const data = resp.data;
         if (data && data.hits) {
             this.incrementPage();
-            
-            return { hits: data.hits }; 
+            return resp;
         } else {
             throw new Error("No 'hits' property found in response data.");
         }
@@ -31,7 +28,6 @@ export default class ImageApiSearch {
         console.log(err);
     }
 }
-
     incrementPage() {
         this.page += 1;
     }

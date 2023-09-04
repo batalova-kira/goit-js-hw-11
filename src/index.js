@@ -1,38 +1,22 @@
 import './sass/index.scss';
 import { lightbox } from './lightbox';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import ImageApiSearch  from './pixabay-api';
+import ImageApiSearch from './pixabay-api';
+import { createMarkup } from './createMarkup';
+import { isEmpty } from './isEmpty';
 
 const refs = {
     form: document.querySelector('#search-form'),
     input: document.querySelector('input[searchQuery]'),
-    btnSearch: document.querySelector('.search-btn'),
     gallery: document.querySelector('.gallery'),
     btnLoadMore: document.querySelector('.load-more'),
 }
 const newSearch = new ImageApiSearch();
+let shownPhoto = 0;
 
 refs.form.addEventListener('submit', handlerSubmit);
 refs.btnLoadMore.addEventListener('click', handlerLoadMore);
-
-const isEmpty = (data) => {
-  if (typeof data === 'object' || Array.isArray(data)) {
-    if ((Object.keys(data).length === 0) || (data.length === 0)) {
-      return true;
-    }
-  } else {
-    switch (data) {
-      case typeof(data) === "undefined":
-      case "":
-      case 0:
-      case "0":
-      case null:
-      case false:
-        return true;
-    }
-  }
-  return false;
-}
+refs.btnLoadMore.classList.replace('load-more','hidden');
 
 function handlerSubmit(e) {
     e.preventDefault();
@@ -41,66 +25,38 @@ function handlerSubmit(e) {
     if (!newSearch.query) {
         Notify.failure("Please fill in the field!");
         return;
-    }
-    refs.gallery.innerHTML = '';
+  };
+
+  refs.gallery.innerHTML = '';
+  refs.btnLoadMore.classList.replace('load-more', 'hidden');
     newSearch.fetchSearchImages()
-        .then((data) => {
-            if (isEmpty(data.hits)) {
-                Notify.failure("We're sorry, but you've reached the end of search results.", {
+        .then((response) => {
+            if (isEmpty(response.data.hits)) {
+                Notify.failure("We're sorry, but no request found with this text", {
                     borderRadius: '10px',
                     timeout: 1000,
                 });
                 return false;
-            }
-            const totalPhoto = data.totalHits || 0; 
-            Notify.success(`Hooray! We found ${totalPhoto} images.`);
-           console.log( data)
-            refs.gallery = document.querySelector('.gallery');
-            refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
-            lightbox.refresh();
-        });
+          }
+          refs.btnLoadMore.classList.replace('hidden', 'load-more');;
+          const totalPhoto = response.data.totalHits || 0;
+
+          Notify.success(`Hooray! We found ${totalPhoto} images.`);
+          refs.gallery.insertAdjacentHTML('beforeend', createMarkup(response.data.hits));
+          lightbox.refresh();
+          refs.gallery.firstElementChild.getBoundingClientRect();
+          window.scrollBy({
+            top: 100,
+            behavior: "smooth",
+    });
+  });
 }
 
 function handlerLoadMore() {
     newSearch.fetchSearchImages()
-        .then((data) => {
-            refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
-            lightbox.refresh();
+        .then((response) => {
+          refs.gallery.insertAdjacentHTML('beforeend', createMarkup(response.data.hits));
+          lightbox.refresh();
         });
 }
 
-const defaults = {
-    webformatURL: 'https://demofree.sirv.com/nope-not-here.jpg?w=150',
-    largeImageURL: 'https://demofree.sirv.com/nope-not-here.jpg?w=150',
-    tags: 'Tags not found',
-    likes: 'XX',
-    views: 'XX',
-    comments: 'XX',
-    downloads: 'XX',
-}
-
-function createMarkup(arr) {
-    return arr.map(item => `
-    <div class="photo-card">
-  <a class="photo-link" href="${item.largeImageURL || defaults.largeImageURL}">
-        <div >
-          <img class="photo-img" src="${item.webformatURL || defaults.webformatURL}" alt="${item.tags || defaults.tags}" loading="lazy" />
-        </div>
-          <div class="info">
-              <p class="info-item">
-                  <b>Likes</b> ${item.likes || defaults.likes}
-              </p>
-              <p class="info-item">
-                  <b>Views</b> ${item.views || defaults.views}
-              </p>
-              <p class="info-item">
-                  <b>Comments</b> ${item.comments || defaults.comments}
-              </p>
-              <p class="info-item">
-                  <b>Downloads</b> ${item.downloads || defaults.downloads}
-              </p>
-          </div>
-        </a>
-    </div>
-  `).join("");
-}

@@ -1,5 +1,55 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
+img {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background: linear-gradient(-45deg, #528ca1, #9dbeb7);
+
+    // background-image: url("https: //cdn.pixabay.com/photo/2022/02/08/00/11/watercolor-7000531_1280.png");
+}
+
+.search-input {
+font-family: inherit;
+font-size: 18px;
+    border: 0;
+    padding: 0 15px;
+    outline: none;
+    background-color: transparent;
+    color: #fefefe;
+    
+    &::placeholder {
+        color: inherit;
+    }
+}
+
+.search-btn {
+border: 0;
+    height: 44px;
+    width: 144px;
+    border-radius: 10px;
+    background-color: #a8c4be;
+    color: #fefefe;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+    &:hover {
+        background-color: #fefefe;
+        color: #528ca1;
+    }
+}
+
 .gallery {
     display: flex;
     flex-direction: row;
@@ -8,12 +58,6 @@
 
     gap: 30px;
     padding: 20px;
-}
-
-img {
-    display: block;
-    height: auto;
-    width: 100%;
 }
 
 .photo-card {
@@ -47,9 +91,21 @@ img {
 .load-more {
     display: block;
     margin: 0 auto;
+    border: 0;
+        height: 44px;
+        width: 144px;
+        border-radius: 10px;
+        background-color: #a8c4be;
+        color: #fefefe;
+        cursor: pointer;
+        transition: all .2s;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    
+        &:hover {
+            background-color: #fefefe;
+            color: #528ca1;
+            border: 1px solid #528ca1;
+        }
 }
 
-.search-form {
-    margin: 30px;
-}
 
