@@ -37,7 +37,8 @@ const isEmpty = (data) => {
 function handlerSubmit(e) {
     e.preventDefault();
     newSearch.query = e.currentTarget.elements.searchQuery.value.trim();
-    newSearch.resetPage();
+  newSearch.resetPage();
+
     if (!newSearch.query) {
         Notify.failure("Please fill in the field!");
     }
@@ -45,22 +46,23 @@ function handlerSubmit(e) {
         .then((data) => {
             if (isEmpty(data.hits)) {
                 Notify.failure("We're sorry, but you've reached the end of search results.", {
-                position: 'top-right',
                 borderRadius: '10px',
                 timeout: 1000,
                 })
                 return false;
             }
             Notify.success(`Hooray! We found ${data.total} images.`); 
-
-            refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
+          refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
             lightbox.refresh();
         });
 }
 
 function handlerLoadMore() {
     newSearch.fetchSearchImages()
-        .then((data) => { refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits)) });
+        .then((data) => {
+            refs.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits))
+            lightbox.refresh();
+        });
 }
 
 const defaults = {
