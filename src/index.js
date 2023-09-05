@@ -7,6 +7,7 @@ import { isEmpty } from './isEmpty';
 import { scrollGallery } from './scrollGallery';
 import { refs } from './refs';
 
+
 const newSearch = new ImageApiSearch();
 let shownPhoto = 0;
 
@@ -26,6 +27,7 @@ function handlerSubmit(e) {
   refs.btnLoadMore.classList.replace('load-more', 'hidden');
 
   newSearch.fetchSearchImages().then(response => {
+  
     if (isEmpty(response.data.hits)) {
       Notify.failure("We're sorry, but no request found with this text", {
         borderRadius: '10px',
@@ -34,6 +36,7 @@ function handlerSubmit(e) {
       return false;
     }
     refs.btnLoadMore.classList.replace('hidden', 'load-more');
+    
     shownPhoto = 0;
     shownPhoto += response.data.hits.length;
     if (Number(shownPhoto) >= Number(response.data.totalHits)) {
@@ -42,6 +45,7 @@ function handlerSubmit(e) {
       );
       refs.btnLoadMore.classList.replace('load-more', 'hidden');
     }
+
     const totalPhoto = response.data.totalHits || 0;
     Notify.success(`Hooray! We found ${totalPhoto} images.`);
 
@@ -71,3 +75,6 @@ function handlerLoadMore() {
     scrollGallery(refs.gallery);
   });
 }
+
+
+
