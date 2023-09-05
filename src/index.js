@@ -59,7 +59,7 @@ function handlerLoadMore() {
           shownPhoto += response.data.hits.length;
           console.log(Number(response.data.totalHits));
           console.log(Number(shownPhoto) );
-          if (Number(shownPhoto) >= Number(response.data.totalHits)) {
+          if (Number(shownPhoto) > Number(response.data.totalHits)) {
             Notify.failure("We're sorry, but you've reached the end of search results.")
             refs.btnLoadMore.classList.replace('load-more', 'hidden');
           }
