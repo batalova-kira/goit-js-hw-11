@@ -22,8 +22,8 @@ img {
     height: 40px;
     width: 40%;
 
-font-family: inherit;
-font-size: 18px;
+    font-family: inherit;
+    font-size: 18px;
     border: 0;
     padding: 0 15px;
     outline: none;
@@ -69,9 +69,11 @@ font-size: 18px;
     width: 3rem;
     cursor: pointer;
     fill: inherit;
+    background-color: transparent;
     
     &:hover {
             fill: #528ca1;
+            background-color: transparent;
         }
 }
 
@@ -90,6 +92,7 @@ font-size: 18px;
         border-radius: 7px;
         box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 }
+
 .photo-img {
     width: 400px;
     height: 250px;

@@ -19,15 +19,16 @@ refs.btnLoadMore.addEventListener('click', handlerLoadMore);
 refs.btnLoadMore.classList.replace('load-more', 'hidden');
 
 function handlerSubmit(e) {
-    e.preventDefault();
+  e.preventDefault();
+  
     newSearch.query = e.currentTarget.elements.searchQuery.value.trim();
     newSearch.resetPage();
     if (!newSearch.query) {
         Notify.failure("Please fill in the field!");
         return;
   };
-
   refs.gallery.innerHTML = '';
+  shownPhoto = 0;
   refs.btnLoadMore.classList.replace('load-more', 'hidden');
     newSearch.fetchSearchImages()
         .then((response) => {
@@ -38,7 +39,14 @@ function handlerSubmit(e) {
                 });
                 return false;
           }
-          refs.btnLoadMore.classList.replace('hidden', 'load-more');;
+          refs.btnLoadMore.classList.replace('hidden', 'load-more');
+            shownPhoto = 0;
+          shownPhoto += response.data.hits.length;
+  
+          if (Number(shownPhoto) >= Number(response.data.totalHits)) {
+            Notify.failure("We're sorry, but you've reached the end of search results.");
+            refs.btnLoadMore.classList.replace('load-more', 'hidden');
+          }
           const totalPhoto = response.data.totalHits || 0;
           Notify.success(`Hooray! We found ${totalPhoto} images.`);
           
@@ -56,13 +64,14 @@ function handlerLoadMore() {
     newSearch.fetchSearchImages()
         .then((response) => {
           refs.gallery.insertAdjacentHTML('beforeend', createMarkup(response.data.hits));
-          shownPhoto += response.data.hits.length;
           console.log(Number(response.data.totalHits));
-          console.log(Number(shownPhoto) );
-          if (Number(shownPhoto) > Number(response.data.totalHits)) {
-            Notify.failure("We're sorry, but you've reached the end of search results.")
+          console.log(Number(shownPhoto));  
+          shownPhoto += response.data.hits.length;
+          if (Number(shownPhoto) >= Number(response.data.totalHits)) {
+            Notify.failure("We're sorry, but you've reached the end of search results.");
             refs.btnLoadMore.classList.replace('load-more', 'hidden');
           }
+        
           lightbox.refresh();
         });
 }
