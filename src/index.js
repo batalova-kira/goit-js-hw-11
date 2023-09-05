@@ -16,7 +16,7 @@ let shownPhoto = 0;
 
 refs.form.addEventListener('submit', handlerSubmit);
 refs.btnLoadMore.addEventListener('click', handlerLoadMore);
-refs.btnLoadMore.classList.replace('load-more','hidden');
+refs.btnLoadMore.classList.replace('load-more', 'hidden');
 
 function handlerSubmit(e) {
     e.preventDefault();
@@ -40,8 +40,8 @@ function handlerSubmit(e) {
           }
           refs.btnLoadMore.classList.replace('hidden', 'load-more');;
           const totalPhoto = response.data.totalHits || 0;
-
           Notify.success(`Hooray! We found ${totalPhoto} images.`);
+          
           refs.gallery.insertAdjacentHTML('beforeend', createMarkup(response.data.hits));
           lightbox.refresh();
           refs.gallery.firstElementChild.getBoundingClientRect();
@@ -56,6 +56,13 @@ function handlerLoadMore() {
     newSearch.fetchSearchImages()
         .then((response) => {
           refs.gallery.insertAdjacentHTML('beforeend', createMarkup(response.data.hits));
+          shownPhoto += response.data.hits.length;
+          console.log(Number(response.data.totalHits));
+          console.log(Number(shownPhoto) );
+          if (Number(shownPhoto) >= Number(response.data.totalHits)) {
+            Notify.failure("We're sorry, but you've reached the end of search results.")
+            refs.btnLoadMore.classList.replace('load-more', 'hidden');
+          }
           lightbox.refresh();
         });
 }

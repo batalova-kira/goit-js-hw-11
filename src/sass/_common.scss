@@ -20,7 +20,7 @@ img {
 .search-input {
     position: relative;
     height: 40px;
-    width: 544px;
+    width: 40%;
 
 font-family: inherit;
 font-size: 18px;
@@ -39,7 +39,7 @@ font-size: 18px;
 
 .search-btn {
     position: absolute;
-    right: 35%;
+    right: 30%;
     border: 0;
     height: 40px;
     width: 40px;
@@ -49,6 +49,7 @@ font-size: 18px;
     cursor: pointer;
     transition: all .2s;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    fill: #fefefe;
 
     &:hover {
         background-color: #fefefe;
@@ -67,11 +68,11 @@ font-size: 18px;
     right: -50%;
     width: 3rem;
     cursor: pointer;
-    stroke: #fefefe;
+    fill: inherit;
     
     &:hover {
             background-color: #fefefe;
-            stroke: #528ca1;
+            fill: #528ca1;
         }
 }
 
