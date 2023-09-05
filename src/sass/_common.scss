@@ -14,12 +14,14 @@ img {
     display: flex;
     justify-content: center;
     padding: 15px;
-    background: linear-gradient(-45deg, #528ca1, #9dbeb7);
-
-    // background-image: url("https: //cdn.pixabay.com/photo/2022/02/08/00/11/watercolor-7000531_1280.png");
+    background: linear-gradient(-45deg, #528ca1, #a8c4be);
 }
 
 .search-input {
+    position: relative;
+    height: 40px;
+    width: 544px;
+
 font-family: inherit;
 font-size: 18px;
     border: 0;
@@ -27,6 +29,8 @@ font-size: 18px;
     outline: none;
     background-color: transparent;
     color: #fefefe;
+    border-radius: 10px;
+    box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.2);
     
     &::placeholder {
         color: inherit;
@@ -34,10 +38,12 @@ font-size: 18px;
 }
 
 .search-btn {
-border: 0;
-    height: 44px;
-    width: 144px;
-    border-radius: 10px;
+    position: absolute;
+    right: 35%;
+    border: 0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
     background-color: #a8c4be;
     color: #fefefe;
     cursor: pointer;
@@ -47,7 +53,26 @@ border: 0;
     &:hover {
         background-color: #fefefe;
         color: #528ca1;
+        transition: color 0.15s ease-in-out;
+        transform: scale(1.2);
     }
+}
+
+.text-field__aicon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 50%;
+    bottom: 50%;
+    right: -50%;
+    width: 3rem;
+    cursor: pointer;
+    stroke: #fefefe;
+    
+    &:hover {
+            background-color: #fefefe;
+            stroke: #528ca1;
+        }
 }
 
 .gallery {
