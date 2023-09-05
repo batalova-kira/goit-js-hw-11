@@ -7,6 +7,7 @@ const defaults = {
     comments: 'XX',
     downloads: 'XX',
 }
+
 export function createMarkup(arr) {
     return arr.map(item => `
     <div class="photo-card">
@@ -31,4 +32,5 @@ export function createMarkup(arr) {
         </a>
     </div>
   `).join("");
+  
 }

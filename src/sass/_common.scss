@@ -1,5 +1,9 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
+body {
+    position: relative;
+}
+
 img {
     display: block;
     height: auto;
@@ -135,5 +139,3 @@ img {
             border: 1px solid #528ca1;
         }
 }
-
-
